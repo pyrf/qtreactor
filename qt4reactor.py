@@ -336,6 +336,7 @@ def posixinstall():
     p = QtReactor()
     from twisted.internet.main import installReactor
     installReactor(p)
+    return p
 
 
 def win32install():
@@ -345,6 +346,7 @@ def win32install():
     p = QtEventReactor()
     from twisted.internet.main import installReactor
     installReactor(p)
+    return p
 
 
 if runtime.platform.getType() == 'win32':

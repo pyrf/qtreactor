@@ -10,11 +10,13 @@ Many thanks to Darren Dale who provided the patch to fix the reactor for Qt4.4
 
 = Using the Qt4Reactor =
 
-In your own code, BEFORE you import the reactor...
+In your own code:
 
 app = QApplication(sys.argv)
 import qt4reactor
-qt4reactor.install()
+reactor = qt4reactor.install()
+
+After this point importing the reactor will give the same object.
 
 = Gui =
 
