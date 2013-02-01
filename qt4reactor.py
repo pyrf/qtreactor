@@ -145,6 +145,18 @@ class QtReactor(posixbase.PosixReactorBase):
         self._blockApp = None
         posixbase.PosixReactorBase.__init__(self)
 
+        # Workaround for some bugs in the Twisted POSIXReactorBase class (see
+        # docs for _cleanup_reactor).
+        self.addSystemEventTrigger('after', 'shutdown', self._cleanup_reactor)
+
+    def _cleanup_reactor(self):
+        """
+        Workaround some bugs in the Twisted POSIXReactorBase class that causes
+        an application to be kept alive even after reactor.stop() has been
+        called.
+        """
+        for r in list(self._internalReaders):
+            self.removeReader(r)
 
     def _add(self, xer, primary, type):
         """
